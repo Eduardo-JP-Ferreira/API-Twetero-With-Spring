@@ -1,6 +1,7 @@
 package com.twetero.api.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.twetero.api.dtos.UserDTO;
 import com.twetero.api.models.UserModel;
 import com.twetero.api.repositories.UserRepository;
+import com.twetero.api.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -20,22 +22,23 @@ import jakarta.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-  final UserRepository userRepository;
+  final UserService userService;
 
-  UserController(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public UserController(UserService userService) {
+    this.userService = userService;
   }
 
   @GetMapping
   public ResponseEntity<Object> getHolidays() {
-    List<UserModel> users = userRepository.findAll();
-    return ResponseEntity.status(HttpStatus.OK).body(users);
+    return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
   }
 
   @PostMapping
   public ResponseEntity<Object> createUser(@RequestBody @Valid UserDTO body) {
-    UserModel user = new UserModel(body);
-    userRepository.save(user);
+    Optional<UserModel> user = userService.save(body);
+    if (!user.isPresent()) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("This Username Already Exist");
+    }
     return ResponseEntity.status(HttpStatus.CREATED).body(user);
   }
 }
