@@ -1,6 +1,5 @@
 package com.twetero.api.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.twetero.api.dtos.UserDTO;
 import com.twetero.api.models.UserModel;
-import com.twetero.api.repositories.UserRepository;
 import com.twetero.api.services.UserService;
 
 import jakarta.validation.Valid;

@@ -1,5 +1,7 @@
 package com.twetero.api.models;
 
+import com.twetero.api.dtos.TweetDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,9 +23,14 @@ public class TweetModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String text;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "userId")
     private Long userId;
+
+    public TweetModel(TweetDTO dto) {
+        this.userId = dto.getUserId();
+        this.text = dto.getText();
+    }
 }
