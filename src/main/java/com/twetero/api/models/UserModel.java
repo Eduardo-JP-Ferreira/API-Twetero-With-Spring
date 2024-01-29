@@ -19,18 +19,18 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class UserModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+  @Column(nullable = false, unique = true)
+  private String username;
 
-    @Column(nullable = false)
-    private String avatar;
+  @Column(nullable = false)
+  private String avatar;
 
-    public UserModel(UserDTO dto) {
-        this.username = dto.getUsername();
-        this.avatar = dto.getAvatar();
-    }
+  public UserModel(UserDTO dto) {
+    this.username = dto.getUsername();
+    this.avatar = dto.getAvatar();
+  }
 }
