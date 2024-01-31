@@ -47,6 +47,11 @@ public class TweetController {
   @PostMapping
   public ResponseEntity<Object> createTweet(@RequestBody @Valid TweetDTO body) {
     Optional<TweetModel> tweet = tweetService.save(body);
+
+    if (!tweet.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+    }
+
     return ResponseEntity.status(HttpStatus.CREATED).body(tweet);
   }
 }
