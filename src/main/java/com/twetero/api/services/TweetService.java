@@ -27,6 +27,10 @@ public class TweetService {
   }
 
   public Optional<List<TweetModel>> findAllByUserId(Long userId) {
+    Optional<UserModel> user = userRepository.findById((userId));
+    if (!user.isPresent()) {
+      return Optional.empty();
+    }
     return Optional.of(tweetRepository.findAllByUserId(userId));
   }
 
